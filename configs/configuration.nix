@@ -83,7 +83,9 @@
     github-cli          # GitHub CLI
     github-desktop      # GitHub Desktop (GUI)
     obsidian
-    cider
+    emacs
+    htop
+    neovim
     discord
     arduino-ide
     flatpak 
@@ -93,7 +95,6 @@
     pipes
     cava
     sddm
-    dropbox
     plasma-workspace
     kde-cli-tools
     kde-gtk-config
@@ -103,16 +104,22 @@
     sddm-kcm
     plasma-desktop
     krusader
+    alacritty
+    libsForQt5.bismuth
+    latte-dock
   ];
 
   # Enable Flatpak
+
+
   services.flatpak.enable = true;
 
   # Install Firefox
-  programs.firefox.enable = true;
+  #programs.firefox.enable = true;
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
+
 
   # Enable Bluetooth
   hardware.bluetooth.enable = true;
