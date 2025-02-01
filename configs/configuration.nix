@@ -83,14 +83,16 @@
     github-cli          # GitHub CLI
     github-desktop      # GitHub Desktop (GUI)
     obsidian
-    emacs
     htop
     neovim
     discord
     arduino-ide
     flatpak 
     python3
+    npm
     fastfetch
+    json
+    react
     cmatrix
     pipes
     cava
@@ -101,7 +103,7 @@
     rofi
     nmap
     wireshark
-    sddm-kcm
+    fortune
     plasma-desktop
     krusader
     alacritty
