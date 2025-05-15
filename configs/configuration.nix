@@ -2,23 +2,31 @@
 
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [ # hardware-configuration nie istnieje ale niech zostanie ze niby ogarniete jestes
+    #wez to posegreguj przzyszly ja
+
       ./hardware-configuration.nix
+      ./packages.nix
     ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+#zmien na gruba japierodle ale tu syf
+  networking.hostName = "Linuz"; # nazwa kompa w sieci
 
-  networking.hostName = "nixos"; # Define your hostname.
+#monitor setting rozdzialka
+  monitor = [
+   "DP-1, 1920x1080, 0x0, 1"
+];
 
-  # Enable networking
+  # siec 
   networking.networkmanager.enable = true;
 
-  # Set your time zone.
+  # Strefa czasowa zmien na srodkowo europejski cepie Yugoslavia nie istnieje
   time.timeZone = "Europe/Sarajevo";
 
-  # Select internationalisation properties.
+  # archive mirror jebnij komuchom po serwerach
   i18n.defaultLocale = "en_US.UTF-8";
 
   i18n.extraLocaleSettings = {
@@ -33,27 +41,43 @@
     LC_TIME = "bs_BA.UTF-8";
   };
 
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
+  # tylko wayland cipy
+  #services.sddm.enable = true;
 
+      services.xserver.displayManager.sddm.enable = true; 
+      services.xserver.displayManager.gdm.wayland.enable = true;
+     #wez to wjeb do osobnego pliku ale zmien wartoschi sha256 i variables
+  
+  #hyprland jako tiling i chuj 
+  #programs.hyprland.enable = true
+  
   # Enable the KDE Plasma Desktop Environment.
-  services.displayManager.sddm.enable = true;
-  services.xserver.desktopManager.plasma5.enable = true;
+  #services.displayManager.sddm.enable = true;
+  #services.xserver.desktopManager.plasma5.enable = true;
 
-
+#do zrobienie wyjebac x11 z dm zastap wayland
   # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "pl";
-    variant = "";
+  #services.xserver.xkb = {
+    #layout = "pl";
+    #variant = "";
   };
 
-  # Configure console keymap
-  console.keyMap = "pl2";
+  # lepsze nie dworjak 
+  # do zdrobienia remap caps to esc
+  #console.keyMap = "pl2";
 
-  # Enable CUPS to print documents.
+  input {
+  kb_layout = pl
+  kb_variant =
+  kb_model =
+  kb_options = caps:escape
+  kb_rules =
+  repeat_rate = 50
+  repeat_delay = 300
+
+  # jestes drukarka harry
   services.printing.enable = true;
 
-  # Enable sound with PipeWire.
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
@@ -63,53 +87,16 @@
     pulse.enable = true;
   };
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.racoon = {
+  # lepiej se variable ustaw debilu jebany
+  users.users.jabaldoo = {
     isNormalUser = true;
-    description = "Racoon";
+    description = "jabaldoo";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
       kate
-      vim
+      nvim
     ];
-  };
-
-  # Install additional packages for the user
-  environment.systemPackages = with pkgs; [
-    obs-studio
-    vscode
-    discover
-    git
-    github-cli          # GitHub CLI
-    github-desktop      # GitHub Desktop (GUI)
-    obsidian
-    htop
-    neovim
-    discord
-    arduino-ide
-    flatpak 
-    python3
-    npm
-    fastfetch
-    json
-    react
-    cmatrix
-    pipes
-    cava
-    sddm
-    plasma-workspace
-    kde-cli-tools
-    kde-gtk-config
-    rofi
-    nmap
-    wireshark
-    fortune
-    plasma-desktop
-    krusader
-    alacritty
-    libsForQt5.bismuth
-    latte-dock
-  ];
+  }
 
   # Enable Flatpak
 
@@ -118,6 +105,9 @@
 
   # Install Firefox
   #programs.firefox.enable = true;
+  #spieprzac z firefoxe szpiedzy jebany
+
+  programs.brave.enable = true
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -126,19 +116,15 @@
   # Enable Bluetooth
   hardware.bluetooth.enable = true;
   
-  # Disable power-profiles-daemon to avoid conflicts with TLP
+  # wyjebac tlp tylko baternie niszczy
   services.power-profiles-daemon.enable = false;
 
-  # Enable TLP for better power management (ThinkPad-specific)
-  services.tlp.enable = true;
+  # optymalizacja bateri niby dziala ale lepiej nie 
+  #services.tlp.enable = true;
 
-  # Enable ThinkPad-specific configurations
+  #hardware specyfiki do lapka ustaw se jakis
   hardware.enableRedistributableFirmware = true;  # Enable non-free firmware for better hardware compatibility (e.g., wifi, bluetooth)
 
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  system.stateVersion = "24.11"; # Did you read the comment?
+  
+  system.stateVersion = "24.11"; # nieaktualne o rok chyba
 }
-
